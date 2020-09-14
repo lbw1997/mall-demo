@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "secure.ignored",
+      "type": "com.abkm.mall.demo.security.config.IgnoreUrlsConfig",
+      "sourceType": "com.abkm.mall.demo.security.config.IgnoreUrlsConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "secure.ignored.urls",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.abkm.mall.demo.security.config.IgnoreUrlsConfig"
+    }
+  ],
+  "hints": []
+}
