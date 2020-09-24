@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用于配置白名单资源路径
- * Created by macro on 2018/11/5.
+ * description: 白名单路径配置类 <br>
+ * date: 2020/9/24 18:52 <br>
+ * author: libowen <br>
+ * version: 1.0 <br>
  */
 @Getter
 @Setter
@@ -17,5 +19,4 @@ import java.util.List;
 public class IgnoreUrlsConfig {
 
     private List<String> urls = new ArrayList<>();
-
 }

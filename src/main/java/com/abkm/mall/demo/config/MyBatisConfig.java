@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan({"com.abkm.mall.demo.modules.*.mapper"})
+@MapperScan({"com.abkm.mall.demo.module.*.mapper"})
 public class MyBatisConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

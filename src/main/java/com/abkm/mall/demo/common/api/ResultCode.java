@@ -1,12 +1,10 @@
 package com.abkm.mall.demo.common.api;
 
 /**
- * description: 枚举了一些常用API操作码 <br>
- * date: 2020/9/13 20:44 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 枚举了一些常用API操作码
+ * Created by macro on 2019/4/19.
  */
-public enum ResultCode implements IErrorCode{
+public enum ResultCode implements IErrorCode {
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     VALIDATE_FAILED(404, "参数检验失败"),

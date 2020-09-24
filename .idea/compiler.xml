@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="com.abkm.mall.demo" />
         <module name="com-abkm-malldemo" />
       </profile>
     </annotationProcessing>
@@ -13,6 +14,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="com-abkm-malldemo" options="-parameters" />
+      <module name="com.abkm.mall.demo" options="-parameters" />
     </option>
   </component>
 </project>

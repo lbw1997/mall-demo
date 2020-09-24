@@ -1,12 +1,10 @@
 package com.abkm.mall.demo.common.api;
 
 /**
- * description: CommonResult <br>
- * date: 2020/9/13 20:39 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 通用返回对象
+ * Created by macro on 2019/4/19.
  */
-public class CommonResult<T>  {
+public class CommonResult<T> {
     private long code;
     private String message;
     private T data;

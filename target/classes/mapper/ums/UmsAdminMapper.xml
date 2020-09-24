@@ -3,7 +3,7 @@
 <mapper namespace="com.abkm.mall.demo.module.ums.mapper.UmsAdminMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.abkm.mall.demo.module.ums.entity.UmsAdmin">
+    <resultMap id="BaseResultMap" type="com.abkm.mall.demo.module.ums.model.UmsAdmin">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="password" property="password" />

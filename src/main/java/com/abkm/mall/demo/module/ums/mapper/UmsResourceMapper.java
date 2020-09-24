@@ -1,7 +1,8 @@
 package com.abkm.mall.demo.module.ums.mapper;
 
-import com.abkm.mall.demo.module.ums.entity.UmsResource;
+import com.abkm.mall.demo.module.ums.model.UmsResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,20 +13,12 @@ import java.util.List;
  * </p>
  *
  * @author abkm
- * @since 2020-09-13
+ * @since 2020-09-24
  */
 public interface UmsResourceMapper extends BaseMapper<UmsResource> {
-    /**
-     *  根据用户Id获取访问资源列表
-     * @param adminId
-     * @return
-     */
-    List<UmsResource> getResourcesList(@Param("adminId")Long adminId);
 
     /**
-     * 根据角色名获取访问资源列表
-     * @param roleId
-     * @return
+     * 获取用户所有可访问资源
      */
-    List<UmsResource> getResourceListByRoleId(@Param("roleId")Long roleId);
+    List<UmsResource> getResourceList(@Param("adminId") Long adminId);
 }

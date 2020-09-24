@@ -1,20 +1,19 @@
 package com.abkm.mall.demo.module.ums.service.impl;
 
 import com.abkm.mall.demo.common.service.RedisService;
-import com.abkm.mall.demo.module.ums.entity.UmsAdmin;
-import com.abkm.mall.demo.module.ums.entity.UmsResource;
+import com.abkm.mall.demo.module.ums.model.UmsAdmin;
+import com.abkm.mall.demo.module.ums.model.UmsResource;
 import com.abkm.mall.demo.module.ums.service.UmsAdminCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * description: UmsAdminCacheServiceImpl <br>
- * date: 2020/9/14 10:46 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 后台用户缓存管理Service实现类
  */
+@Service
 public class UmsAdminCacheServiceImpl implements UmsAdminCacheService {
 
     @Autowired
@@ -29,31 +28,32 @@ public class UmsAdminCacheServiceImpl implements UmsAdminCacheService {
     private String REDIS_KEY_RESOURCE_LIST;
 
     /**
-     * 根据username获取admin信息
-     * @param username
-     * @return
+     * 从缓存中获取用户信息
      */
     @Override
-    public UmsAdmin getUmsAdmin(String username) {
-        String key = REDIS_DATABASE+":"+REDIS_KEY_ADMIN+":"+username;
-        return (UmsAdmin)redisService.get(key);
+    public UmsAdmin getAdmin(String username) {
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_ADMIN + ":" + username;
+        return (UmsAdmin) redisService.get(key);
     }
 
     /**
-     * 根据adminId获取资源列表
+     * 缓存用户信息
      */
+    @Override
+    public void setAdmin(UmsAdmin admin) {
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_ADMIN + ":" + admin.getUsername();
+        redisService.set(key, admin, REDIS_EXPIRE);
+    }
+
     @Override
     public List<UmsResource> getResourceList(Long adminId) {
-        String key = REDIS_DATABASE+":"+REDIS_KEY_RESOURCE_LIST+":"+adminId;
-        return (List<UmsResource>)redisService.get(key);
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;
+        return (List<UmsResource>) redisService.get(key);
     }
 
-    /**
-     * 根据adminId缓存资源列表
-     */
     @Override
     public void setResourceList(Long adminId, List<UmsResource> resourceList) {
-        String key = REDIS_DATABASE+":"+REDIS_KEY_RESOURCE_LIST+":"+adminId;
-        redisService.set(key,resourceList,REDIS_EXPIRE);
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;
+        redisService.set(key, resourceList, REDIS_EXPIRE);
     }
 }

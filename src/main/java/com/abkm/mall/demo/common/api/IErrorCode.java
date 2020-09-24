@@ -1,12 +1,11 @@
 package com.abkm.mall.demo.common.api;
 
 /**
- * description: IerrorCode <br>
- * date: 2020/9/13 20:43 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 封装API的错误码
+ * Created by macro on 2019/4/19.
  */
 public interface IErrorCode {
-    String getMessage();
     long getCode();
+
+    String getMessage();
 }

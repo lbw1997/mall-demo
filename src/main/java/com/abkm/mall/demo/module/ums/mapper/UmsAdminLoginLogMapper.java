@@ -1,6 +1,6 @@
 package com.abkm.mall.demo.module.ums.mapper;
 
-import com.abkm.mall.demo.module.ums.entity.UmsAdminLoginLog;
+import com.abkm.mall.demo.module.ums.model.UmsAdminLoginLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author abkm
- * @since 2020-09-13
+ * @since 2020-09-24
  */
 public interface UmsAdminLoginLogMapper extends BaseMapper<UmsAdminLoginLog> {
+
 
 }

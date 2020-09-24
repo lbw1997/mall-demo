@@ -13,4 +13,4 @@ spring:
 logging:
   level:
     root: info
-    com.macro.mall: debug
+    com.abkm.mall: DEBUG

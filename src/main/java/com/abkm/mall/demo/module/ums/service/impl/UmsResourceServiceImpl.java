@@ -1,6 +1,6 @@
 package com.abkm.mall.demo.module.ums.service.impl;
 
-import com.abkm.mall.demo.module.ums.entity.UmsResource;
+import com.abkm.mall.demo.module.ums.model.UmsResource;
 import com.abkm.mall.demo.module.ums.mapper.UmsResourceMapper;
 import com.abkm.mall.demo.module.ums.service.UmsResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author abkm
- * @since 2020-09-13
+ * @since 2020-09-24
  */
 @Service
 public class UmsResourceServiceImpl extends ServiceImpl<UmsResourceMapper, UmsResource> implements UmsResourceService {

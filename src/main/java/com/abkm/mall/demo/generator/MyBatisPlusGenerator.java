@@ -105,7 +105,7 @@ public class MyBatisPlusGenerator {
         PackageConfig config = new PackageConfig();
         config.setModuleName(modelName);
         config.setParent(props.getStr("package.base"));
-        config.setEntity("entity");
+        config.setEntity("model");
         return config;
     }
 

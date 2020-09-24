@@ -1,7 +1,6 @@
 package com.abkm.mall.demo.common.config;
 
 import com.abkm.mall.demo.common.domain.SwaggerProperties;
-import com.macro.mall.tiny.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -77,7 +76,6 @@ public abstract class BaseSwaggerConfig {
 
     /**
      * 自定义Swagger配置
-     * @return
      */
     public abstract SwaggerProperties swaggerProperties();
 }

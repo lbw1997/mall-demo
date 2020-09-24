@@ -1,4 +1,4 @@
-package com.abkm.mall.demo.security.compoent;
+package com.abkm.mall.demo.security.component;
 
 import cn.hutool.json.JSONUtil;
 import com.abkm.mall.demo.common.api.CommonResult;
@@ -11,16 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * description: 自定义返回结果：未登录或登录过期<br>
- * date: 2020/9/13 21:20 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 自定义返回结果：未登录或登录过期
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        //设置请求头，允许跨域
         response.setHeader("Access-Control-Allow-Origin", "*");
+        //设置请求头，禁止缓存
         response.setHeader("Cache-Control","no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");

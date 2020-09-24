@@ -1,11 +1,11 @@
 package com.abkm.mall.demo.common.config;
 
+import com.abkm.mall.demo.common.service.RedisService;
+import com.abkm.mall.demo.common.service.impl.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.macro.mall.tiny.common.service.RedisService;
-import com.macro.mall.tiny.common.service.impl.RedisServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;

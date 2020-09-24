@@ -3,7 +3,7 @@
 <mapper namespace="com.abkm.mall.demo.module.ums.mapper.UmsRoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.abkm.mall.demo.module.ums.entity.UmsRole">
+    <resultMap id="BaseResultMap" type="com.abkm.mall.demo.module.ums.model.UmsRole">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="description" property="description" />

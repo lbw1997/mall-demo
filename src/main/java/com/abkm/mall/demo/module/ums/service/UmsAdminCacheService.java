@@ -1,32 +1,33 @@
 package com.abkm.mall.demo.module.ums.service;
 
-import com.abkm.mall.demo.module.ums.entity.UmsAdmin;
-import com.abkm.mall.demo.module.ums.entity.UmsResource;
-import org.springframework.stereotype.Service;
+import com.abkm.mall.demo.module.ums.model.UmsAdmin;
+import com.abkm.mall.demo.module.ums.model.UmsResource;
 
 import java.util.List;
 
+
 /**
- * description: UmsAdminCacheService <br>
- * date: 2020/9/14 10:46 <br>
- * author: libowen <br>
- * version: 1.0 <br>
+ * 后台缓存管理类
  */
-@Service
 public interface UmsAdminCacheService {
 
     /**
-     * 从缓存中获取admin
+     * 获取缓存用户后台信息
      */
-    public UmsAdmin getUmsAdmin(String username);
+    UmsAdmin getAdmin(String username);
 
     /**
-     * 根据adminId从缓存中获取对应资源列表
+     * 缓存用户后台信息
+     */
+    void setAdmin(UmsAdmin umsAdmin);
+
+    /**
+     * 获取缓存中用户资源列表
      */
     List<UmsResource> getResourceList(Long adminId);
 
     /**
-     * 根据adminId向缓存中添加对应的资源列表
+     * 缓存用户资源列表
      */
     void setResourceList(Long adminId, List<UmsResource> resourceList);
 }

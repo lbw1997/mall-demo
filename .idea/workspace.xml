@@ -8,6 +8,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="true" />
@@ -28,8 +31,12 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="AnnotationType" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -50,14 +57,20 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/abkm/mall/demo/common" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.abkm.mall.demo.common.domain" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\macro\com-abkm-malldemo\src\main\java\com\abkm\mall\demo\common" />
+      <recent name="G:\macro\com-abkm-malldemo\src\main\java\com\abkm\mall\demo\common\service" />
       <recent name="G:\macro\com-abkm-malldemo\src\main\java\com\abkm\mall\demo\common\" />
       <recent name="G:\macro\com-abkm-malldemo\src\main\java\com\abkm\mall\demo\config" />
       <recent name="G:\macro\com-abkm-malldemo\src\main\resources" />
@@ -75,7 +88,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.T">
+  <component name="RunManager" selected="Spring Boot.MallMain8080 (1)">
+    <configuration name="DbUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DbUtil" />
+      <module name="com-abkm-malldemo" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MyBatisPlusGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.abkm.mall.demo.generator.MyBatisPlusGenerator" />
       <module name="com-abkm-malldemo" />
@@ -89,23 +109,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyDriverTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MyDriverTest" />
-      <module name="com-abkm-malldemo" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PropertyTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="PropertyTest" />
-      <module name="com-abkm-malldemo" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="T" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="T" />
       <module name="com-abkm-malldemo" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MallMain8080 (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="com.abkm.mall.demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.abkm.mall.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.abkm.mall.demo.MallMain8080" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -125,11 +144,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.T" />
-        <item itemvalue="Application.MyBatisPlusGenerator" />
-        <item itemvalue="Application.PropertyTest" />
-        <item itemvalue="Application.MyDriverTest" />
+        <item itemvalue="Spring Boot.MallMain8080 (1)" />
         <item itemvalue="Spring Boot.MallMain8080" />
+        <item itemvalue="Application.MyBatisPlusGenerator" />
+        <item itemvalue="Application.DbUtil" />
+        <item itemvalue="Application.T" />
       </list>
     </recent_temporary>
   </component>
@@ -162,10 +181,32 @@
       <workItem from="1599962268889" duration="11466000" />
       <workItem from="1599990509143" duration="11401000" />
       <workItem from="1600045224194" duration="6372000" />
+      <workItem from="1600061914086" duration="4357000" />
+      <workItem from="1600163980514" duration="2582000" />
+      <workItem from="1600252268002" duration="2054000" />
+      <workItem from="1600399836049" duration="1226000" />
+      <workItem from="1600735280811" duration="1229000" />
+      <workItem from="1600909369452" duration="38511000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/abkm/mall/demo/security/util/JwtTokenUtil.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/abkm/mall/demo/security/util/JwtTokenUtil.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

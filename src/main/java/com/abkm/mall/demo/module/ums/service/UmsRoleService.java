@@ -1,6 +1,6 @@
 package com.abkm.mall.demo.module.ums.service;
 
-import com.abkm.mall.demo.module.ums.entity.UmsRole;
+import com.abkm.mall.demo.module.ums.model.UmsRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author abkm
- * @since 2020-09-13
+ * @since 2020-09-24
  */
 public interface UmsRoleService extends IService<UmsRole> {
 
