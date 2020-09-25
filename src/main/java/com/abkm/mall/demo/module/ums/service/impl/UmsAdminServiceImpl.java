@@ -1,7 +1,9 @@
 package com.abkm.mall.demo.module.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.abkm.mall.demo.domain.AdminUserDetails;
+import com.abkm.mall.demo.module.ums.dto.UmsAdminParam;
 import com.abkm.mall.demo.module.ums.mapper.UmsAdminLoginLogMapper;
 import com.abkm.mall.demo.module.ums.mapper.UmsResourceMapper;
 import com.abkm.mall.demo.module.ums.model.UmsAdmin;
@@ -11,11 +13,15 @@ import com.abkm.mall.demo.module.ums.model.UmsResource;
 import com.abkm.mall.demo.module.ums.service.UmsAdminCacheService;
 import com.abkm.mall.demo.module.ums.service.UmsAdminService;
 import com.abkm.mall.demo.security.util.JwtTokenUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.Assert;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -71,12 +77,12 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
      */
     @Override
     public List<UmsResource> getResourceList(Long adminId) {
-        //从缓存中查询，存在就直接返回
+        // 从缓存中查询，存在就直接返回
         List<UmsResource> resourceList = adminCacheService.getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
             return  resourceList;
         }
-        //再从数据库中读取，并存入缓存中
+        // 再从数据库中读取，并存入缓存中
         try {
             resourceList = resourceMapper.getResourceList(adminId);
         } catch (Exception e) {
@@ -88,13 +94,81 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         return resourceList;
     }
 
-    //登录功能
+    /**
+     * 注册功能实现
+     */
+    @Override
+    public UmsAdmin register(UmsAdminParam umsAdminParam) {
+        UmsAdmin umsAdmin = new UmsAdmin();
+        BeanUtils.copyProperties(umsAdminParam,umsAdmin);
+        umsAdmin.setCreateTime(new Date());
+        umsAdmin.setStatus(1);
+        // 查询是否已经注册过该用户名
+        QueryWrapper<UmsAdmin> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsAdmin::getUsername,umsAdmin.getUsername());
+        List<UmsAdmin> list = list(wrapper);
+        if (list.size()>0) {
+            return null;
+        }
+        // 密码加密
+        String encodePassword = passwordEncoder.encode(umsAdmin.getPassword());
+        umsAdmin.setPassword(encodePassword);
+        // 进行注册
+        baseMapper.insert(umsAdmin);
+        return umsAdmin;
+    }
+
+    // 根据用户或昵称分页查询用户信息
+    @Override
+    public Page<UmsAdmin> getUmsAdminList(String keyword, Integer pageSize, Integer pageNum) {
+        Page<UmsAdmin> page = new Page<>(pageNum,pageSize);
+        QueryWrapper<UmsAdmin> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<UmsAdmin> lambda = wrapper.lambda();
+        if (StrUtil.isNotBlank(keyword)) {
+            lambda.like(UmsAdmin::getUsername,keyword);
+            lambda.or().like(UmsAdmin::getNickName,keyword);
+        }
+        return page(page,wrapper);
+    }
+
+    // 删除指定用户信息
+    @Override
+    public boolean delete(Long id) {
+        adminCacheService.delAdminById(id);
+        boolean success = delete(id);
+        adminCacheService.delResourceById(id);
+        return success;
+    }
+
+    // 根据用户Id进行更新
+    @Override
+    public boolean update(Long id, UmsAdmin umsAdmin) {
+        umsAdmin.setId(id);
+        UmsAdmin rawAdmin = getById(id);
+        if (rawAdmin.getPassword().equals(umsAdmin.getPassword())) {
+            // 与原加密密码相同的不需要修改
+            umsAdmin.setPassword(null);
+        }else {
+            // 与原加密密码不同的需要修改
+            if (StrUtil.isEmpty(umsAdmin.getPassword())) {
+                umsAdmin.setPassword(null);
+            }else {
+                umsAdmin.setPassword(passwordEncoder.encode(umsAdmin.getPassword()));
+            }
+        }
+        boolean success = updateById(umsAdmin);
+        // 修改之后需要删除原有缓存
+        adminCacheService.delAdminById(id);
+        return success;
+    }
+
+    // 登录功能
     @Override
     public String login(String username, String password) {
 
         String token = null;
         try {
-            //密码加密后进行比对
+            // 密码加密后进行比对
             UserDetails userDetails = loadUserByUsername(username);
 
             if (!passwordEncoder.matches(password,userDetails.getPassword())) {
@@ -121,14 +195,14 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
      * 添加登录信息
      */
     private void insertLoginLog(String username) {
-        //通过用户名获取用户信息
+        // 通过用户名获取用户信息
         UmsAdmin admin = getAdminByUsername(username);
         if (admin == null) return;
-        //创建用户登录信息类，补全相关属性
+        // 创建用户登录信息类，补全相关属性
         UmsAdminLoginLog adminLoginLog = new UmsAdminLoginLog();
         adminLoginLog.setAdminId(admin.getId());
         adminLoginLog.setCreateTime(new Date());
-        //通过ServletRequestAttributes获取ip地址
+        // 通过ServletRequestAttributes获取ip地址
         ServletRequestAttributes attributes =  (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         adminLoginLog.setIp(request.getRemoteAddr());
@@ -140,16 +214,16 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
      */
     @Override
     public UmsAdmin getAdminByUsername(String username) {
-        //从缓存中获取用户信息
+        // 从缓存中获取用户信息
         UmsAdmin admin = adminCacheService.getAdmin(username);
         if (admin != null) return admin;
-        //没有，则从数据库中读取
+        // 没有，则从数据库中读取
         QueryWrapper<UmsAdmin> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(UmsAdmin::getUsername,username);
         List<UmsAdmin> adminList = list(wrapper);
         if (adminList!=null && adminList.size()>0) {
             admin = adminList.get(0);
-            //添加缓存
+            // 添加缓存
             adminCacheService.setAdmin(admin);
             return admin;
         }

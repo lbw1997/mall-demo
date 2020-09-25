@@ -4,6 +4,7 @@ import com.abkm.mall.demo.common.service.RedisService;
 import com.abkm.mall.demo.module.ums.model.UmsAdmin;
 import com.abkm.mall.demo.module.ums.model.UmsResource;
 import com.abkm.mall.demo.module.ums.service.UmsAdminCacheService;
+import com.abkm.mall.demo.module.ums.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.List;
 @Service
 public class UmsAdminCacheServiceImpl implements UmsAdminCacheService {
 
+    @Autowired
+    private UmsAdminService adminService;
     @Autowired
     private RedisService redisService;
     @Value("${redis.database}")
@@ -55,5 +58,20 @@ public class UmsAdminCacheServiceImpl implements UmsAdminCacheService {
     public void setResourceList(Long adminId, List<UmsResource> resourceList) {
         String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;
         redisService.set(key, resourceList, REDIS_EXPIRE);
+    }
+
+    @Override
+    public void delAdminById(Long id) {
+        UmsAdmin umsAdmin = adminService.getById(id);
+        if (umsAdmin!=null) {
+            String key = REDIS_DATABASE + ":" + REDIS_KEY_ADMIN + ":" + umsAdmin.getId();
+            redisService.del(key);
+        }
+    }
+
+    @Override
+    public void delResourceById(Long id) {
+        String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + id;
+        redisService.del(key);
     }
 }
