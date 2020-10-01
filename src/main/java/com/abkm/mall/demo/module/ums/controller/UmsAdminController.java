@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,6 +104,18 @@ public class UmsAdminController {
         boolean success = adminService.update(id,umsAdmin);
         if (success) {
             return CommonResult.success(null);
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation(value = "导出用户信息")
+    @RequestMapping(value = "/export",method = RequestMethod.POST)
+    public CommonResult export(HttpServletResponse response) {
+        boolean success = adminService.exportAdmin(response);
+        if (success) {
+            //这里用CommonResult返回，会报类型转换错误
+            //No converter for  with preset Content-Type 'application/vnd.ms-excel;charset=UTF-8'
+            return null;
         }
         return CommonResult.failed();
     }

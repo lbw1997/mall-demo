@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -61,4 +62,9 @@ public interface UmsAdminService extends IService<UmsAdmin> {
      * 指定Id修改用户信息
      */
     boolean update(Long id, UmsAdmin umsAdmin);
+
+    /**
+     * 导出用户信息
+     */
+    boolean exportAdmin(HttpServletResponse response);
 }

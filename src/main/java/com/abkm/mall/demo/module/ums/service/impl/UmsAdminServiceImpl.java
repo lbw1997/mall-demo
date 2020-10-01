@@ -2,7 +2,9 @@ package com.abkm.mall.demo.module.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.abkm.mall.demo.common.util.ExcelUtils;
 import com.abkm.mall.demo.domain.AdminUserDetails;
+import com.abkm.mall.demo.module.ums.dto.UmsAdminExportVo;
 import com.abkm.mall.demo.module.ums.dto.UmsAdminParam;
 import com.abkm.mall.demo.module.ums.mapper.UmsAdminLoginLogMapper;
 import com.abkm.mall.demo.module.ums.mapper.UmsResourceMapper;
@@ -33,6 +35,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +65,10 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
     private UmsResourceMapper resourceMapper;
     @Autowired
     private UmsAdminLoginLogMapper loginLogMapper;
+    @Autowired
+    private UmsAdminMapper umsAdminMapper;
+
+    private final String ADMIN_EXCEL_TITLE_MASSAGE = "用户信息表";
     /**
      * 获取用户信息
      */
@@ -160,6 +170,32 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
         // 修改之后需要删除原有缓存
         adminCacheService.delAdminById(id);
         return success;
+    }
+
+    /**
+     * 导出用户信息到excel文件
+     */
+    @Override
+    public boolean exportAdmin(HttpServletResponse response) {
+        List<UmsAdmin> admins = umsAdminMapper.selectList(null);
+        if (CollUtil.isNotEmpty(admins)) {
+            //设置响应文件类型
+            response.setContentType("application/vnd.ms-excel");
+            List<UmsAdminExportVo> list = new ArrayList<>();
+            for (UmsAdmin admin :admins) {
+                UmsAdminExportVo adminExportVo = new UmsAdminExportVo();
+                BeanUtils.copyProperties(admin,adminExportVo);
+                list.add(adminExportVo);
+            }
+            try {
+                ExcelUtils.exportExcel(list,"用户信息表","用户信息",UmsAdminExportVo.class,ADMIN_EXCEL_TITLE_MASSAGE,response);
+            } catch (IOException e) {
+                LOGGER.info("用户信息导出出错");
+            }
+        }else {
+            return false;
+        }
+        return true;
     }
 
     // 登录功能

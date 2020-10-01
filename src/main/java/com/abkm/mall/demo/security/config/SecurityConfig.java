@@ -1,5 +1,6 @@
 package com.abkm.mall.demo.security.config;
 
+import com.abkm.mall.demo.common.util.ExcelUtils;
 import com.abkm.mall.demo.security.component.JwtAuthenticationTokenFilter;
 import com.abkm.mall.demo.security.component.RestAuthenticationEntryPoint;
 import com.abkm.mall.demo.security.component.RestfulAccessDeniedHandler;
@@ -60,6 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
+
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -96,4 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public ExcelUtils excelUtils() {
+        return new ExcelUtils();
+    }
 }

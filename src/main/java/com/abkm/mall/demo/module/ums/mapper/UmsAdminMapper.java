@@ -1,7 +1,10 @@
 package com.abkm.mall.demo.module.ums.mapper;
 
 import com.abkm.mall.demo.module.ums.model.UmsAdmin;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
