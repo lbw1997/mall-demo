@@ -33,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -177,7 +178,7 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
      */
     @Override
     public boolean exportAdmin(HttpServletResponse response) {
-        List<UmsAdmin> admins = umsAdminMapper.selectList(null);
+        List<UmsAdmin> admins = list();
         if (CollUtil.isNotEmpty(admins)) {
             //设置响应文件类型
             response.setContentType("application/vnd.ms-excel");
@@ -196,6 +197,34 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> i
             return false;
         }
         return true;
+    }
+
+    /**
+     * 导入用户信息
+     */
+    @Override
+    public boolean importAdmin(MultipartFile file) {
+        int row = 0;
+        try {
+            List<UmsAdminExportVo> list = ExcelUtils.importExcel(file, UmsAdminExportVo.class);
+            System.out.println(list.size());
+            if (CollUtil.isNotEmpty(list)) {
+                List<UmsAdmin> adminList = new ArrayList<>();
+                for (;row<list.size();row++) {
+                    UmsAdminExportVo vo = list.get(row);
+                    UmsAdmin umsAdmin = new UmsAdmin();
+                    BeanUtils.copyProperties(vo,umsAdmin, "password");
+                    umsAdmin.setPassword(passwordEncoder.encode(vo.getPassword()));
+                    umsAdmin.setLoginTime(new Date());
+                    umsAdmin.setStatus(1);
+                    adminList.add(umsAdmin);
+                }
+                return saveBatch(adminList);
+            }
+        } catch (IOException e) {
+            LOGGER.info("导入用户信息失败, "+(row+1)+"行数据有误: {}"+e.getMessage());
+        }
+        return false;
     }
 
     // 登录功能

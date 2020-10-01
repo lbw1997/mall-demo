@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -110,11 +111,21 @@ public class UmsAdminController {
 
     @ApiOperation(value = "导出用户信息")
     @RequestMapping(value = "/export",method = RequestMethod.POST)
-    public CommonResult export(HttpServletResponse response) {
+    public CommonResult exportAdmin(HttpServletResponse response) {
         boolean success = adminService.exportAdmin(response);
         if (success) {
             //这里用CommonResult返回，会报类型转换错误
             //No converter for  with preset Content-Type 'application/vnd.ms-excel;charset=UTF-8'
+            return null;
+        }
+        return CommonResult.failed();
+    }
+
+    @ApiOperation(value = "导入用户信息")
+    @RequestMapping(value = "/import",method = RequestMethod.POST)
+    public CommonResult importAdmin(@RequestParam("file")MultipartFile file) {
+        boolean success = adminService.importAdmin(file);
+        if (success) {
             return null;
         }
         return CommonResult.failed();
